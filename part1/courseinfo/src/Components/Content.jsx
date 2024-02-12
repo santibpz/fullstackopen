@@ -1,10 +1,15 @@
 // Content Component
 
+import Part from "./Part"
+
 const Content = ({ contents }) => {
   return (
     <>
     {
-        contents.map((course, index) => <p key={index}> {course.content} {course.exercises} </p>)
+        contents.map((course, index) => <Part 
+                                         key={index}
+                                         part={course.content}
+                                         exercise={course.exercises}  /> )
     }
     </>
   )
