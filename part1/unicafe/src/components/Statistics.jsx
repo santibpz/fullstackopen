@@ -9,15 +9,18 @@ const Stat = ({category, stat}) => {
 
 const Statistics = (props) => {
   const { good, neutral, bad, total } = props
+
+  if(total === 0) return <h3>No feedback given</h3>
+
   return(
       <>
-      <h1>statistics</h1>
+      
       <Stat category="good" stat = {good} />
       <Stat category="neutral" stat = {neutral} />
       <Stat category="bad" stat = {bad} />
       <Stat category="all" stat = {total} /> 
-      <Stat category="average" stat = {total == 0 ? 0 : (good * 1 + neutral * 0 + bad * -1) / total} /> 
-      <Stat category="average" stat = {total == 0 ? 0 : `${(good * 100) / total} %`} /> 
+      <Stat category="average" stat = {(good * 1 + neutral * 0 + bad * -1) / total} /> 
+      <Stat category="average" stat = {`${(good * 100) / total} %`} /> 
       </>
   )
 }
