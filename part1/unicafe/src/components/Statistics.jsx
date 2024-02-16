@@ -3,7 +3,10 @@
 
 const Stat = ({category, value}) => {
   return (
-    <div>{category} {value}</div>
+    <>
+      <td>{category}</td> 
+      <td>{value}</td>
+    </>
   )
 }
 
@@ -14,12 +17,28 @@ const Statistics = (props) => {
 
   return(
       <>
-        <Stat category="good" value = {good} />
-        <Stat category="neutral" value = {neutral} />
-        <Stat category="bad" value = {bad} />
-        <Stat category="all" value = {total} /> 
-        <Stat category="average" value = {(good * 1 + neutral * 0 + bad * -1) / total} /> 
-        <Stat category="percentage" value = {`${(good * 100) / total} %`} /> 
+       <table>
+        <tbody>
+          <tr>
+            <Stat category="good" value = {good} />
+          </tr>
+          <tr>
+          <Stat category="neutral" value = {neutral} />
+          </tr>
+          <tr>
+            <Stat category="bad" value = {bad} />
+          </tr>
+          <tr>
+            <Stat category="all" value = {total} /> 
+          </tr>
+          <tr>
+            <Stat category="average" value = {(good * 1 + neutral * 0 + bad * -1) / total} /> 
+          </tr>
+          <tr>
+            <Stat category="percentage" value = {`${(good * 100) / total} %`} /> 
+          </tr>
+        </tbody>
+       </table>
       </>
   )
 }
