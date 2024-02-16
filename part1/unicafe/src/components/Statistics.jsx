@@ -32,10 +32,10 @@ const Statistics = (props) => {
             <Stat category="all" value = {total} /> 
           </tr>
           <tr>
-            <Stat category="average" value = {(good * 1 + neutral * 0 + bad * -1) / total} /> 
+            <Stat category="average" value = {((good * 1 + neutral * 0 + bad * -1) / total).toFixed(1)} /> 
           </tr>
           <tr>
-            <Stat category="percentage" value = {`${(good * 100) / total} %`} /> 
+            <Stat category="percentage" value = {`${((good * 100) / total).toFixed(1)} %`} /> 
           </tr>
         </tbody>
        </table>
