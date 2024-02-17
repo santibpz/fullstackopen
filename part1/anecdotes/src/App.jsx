@@ -17,6 +17,8 @@ const App = () => {
    
   // App state
   const [selected, setSelected] = useState(anecdotes[0])
+  const [mostVoted, setMostVoted] = useState(anecdotes[0])
+  const [maxVotes, setMaxVotes] = useState(0)
   const [votes, setVotes] = useState(new Array(anecdotes.length).fill(0))
 
   // handler function
@@ -30,13 +32,32 @@ const App = () => {
     const newVotes = [ ...votes ]
     newVotes[index] += 1
     setVotes(newVotes)
+
+    // check if there is a new most voted anecdote
+    if(newVotes[index] > maxVotes) {
+      setMaxVotes(newVotes[index])
+      setMostVoted(anecdotes[index])
+    }
+
   }
 
   return (
     <div>
       {/* Random Anecdote */}
-      <Anecdote anecdote={selected} numOfVotes= {votes[anecdotes.indexOf(selected)]} handleClick = {handleNewVote} />
+      <h1>Anecdote of the day</h1>
+      <Anecdote anecdote={selected} numOfVotes= {votes[anecdotes.indexOf(selected)]} handleClick = {handleNewVote} showButton = {true} />
       <Button label = "next anecdote" handleClick = {handleNewAnecdote} />
+
+      {/* Most voted anecdote */}
+      
+      {maxVotes !== 0 ?
+       (
+        <>
+          <h1>Anecdote with most votes</h1>
+          <Anecdote anecdote={mostVoted} numOfVotes= {maxVotes} handleClick = {handleNewVote} showButton = {false} />
+        </>
+       )  : null}
+
     </div>
   )
 }
