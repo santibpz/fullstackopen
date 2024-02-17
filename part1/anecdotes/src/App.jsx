@@ -54,7 +54,7 @@ const App = () => {
        (
         <>
           <h1>Anecdote with most votes</h1>
-          <Anecdote anecdote={mostVoted} numOfVotes= {maxVotes} handleClick = {handleNewVote} showButton = {false} />
+          <Anecdote anecdote={mostVoted} numOfVotes= {maxVotes} showButton = {false} />
         </>
        )  : null}
 
