@@ -10,10 +10,19 @@ const App = () => {
   const handleSubmit = e => {
     e.preventDefault()
 
+    // check if person to be added already exists in the phonebook
+    const repeatedName = persons.find(p => p.name === newName)
+    if(repeatedName) {
+      alert(`${newName} already exists in the phonebook`)
+      return
+    }
+
+    // new person object
     const newPerson = {
       name: newName,
     }
 
+    // add the new person to the state
     setPersons(persons.concat(newPerson))
     setNewName('')
   }
