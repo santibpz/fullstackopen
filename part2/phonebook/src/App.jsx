@@ -60,14 +60,19 @@ const App = () => {
     // new person object
     const newPerson = {
       name: newName,
-      phone: newPhone,
-      id: persons.length + 1
+      phone: newPhone
     }
 
-    // add the new person to the state
-    setPersons(persons.concat(newPerson))
-    setNewName('')
-    setNewPhone('')
+    // save person to the server
+    axios
+      .post('http://localhost:3001/persons', newPerson)
+      .then(response => {
+          setPersons(persons.concat(response.data))
+          setNewName('')
+          setNewPhone('')   
+        } )
+      .catch(() => alert("There was an error creating the record, try again later."))
+    
   }
 
   const personsToShow = matchFound ?
