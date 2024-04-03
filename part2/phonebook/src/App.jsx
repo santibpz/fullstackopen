@@ -58,7 +58,15 @@ const App = () => {
     // check if person to be added already exists in the phonebook
     const repeatedName = persons.find(p => p.name === newName)
     if(repeatedName) {
-      alert(`${newName} already exists in the phonebook`)
+      if(window.confirm(`${newName} already exists in the phonebook, replace the old number with a new one?`)) {
+        // update phone number
+        const updatedPerson = { ...repeatedName, phone: newPhone }
+        personService
+          .UpdatePerson(updatedPerson, repeatedName.id)
+          .then(modifiedPerson => {
+              setPersons(persons.map(p => p.id === modifiedPerson.id ? modifiedPerson : p))
+          })
+      }
       return
     }
 
