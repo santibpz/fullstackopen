@@ -11,9 +11,15 @@ const CreatePerson = person => axios
                                 .post(url, person)
                                 .then(response => response.data)
                                 
+const DeletePerson = (id) => {
+    return axios
+            .delete(`${url}/${id}`)
+            .then(response => response.data.id)
+}
 
 
 export default {
     getAll,
-    CreatePerson
+    CreatePerson,
+    DeletePerson
 }

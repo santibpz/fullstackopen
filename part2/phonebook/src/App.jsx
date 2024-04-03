@@ -80,6 +80,18 @@ const App = () => {
     
   }
 
+  // handler fn for deleting a user
+  const handleDelete = id => {
+    const personToDelete = persons.find(p => p.id === id)
+
+    if(window.confirm(`Delete ${personToDelete.name}?`)) {
+      personService
+        .DeletePerson(id)
+        .then(personId => setPersons(persons.filter(p => p.id !== personId)))
+        .catch(() => alert("There was a problem deleting the record, try again later."))
+    }
+  }
+
   const personsToShow = matchFound ?
                         personsFound :
                         persons
@@ -97,7 +109,9 @@ const App = () => {
        newPhone = {newPhone}
        handleNewPhone = {(e) => setNewPhone(e.target.value)} />
 
-      <Persons persons={personsToShow} />
+      <Persons 
+        persons={personsToShow}
+        handleDelete={handleDelete} />
     </div>
   )
 }
