@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react'
-import axios from 'axios'
 import Filter from './components/Filter'
 import PersonForm from './components/PersonForm'
 import Persons from './components/Persons'
+import personService from './services/persons'
 
 const App = () => {
   const [persons, setPersons] = useState([]) 
@@ -14,9 +14,14 @@ const App = () => {
 
   // Fetch data from the server after first render of the App Component
   useEffect(() => {
-    axios
-      .get('http://localhost:3001/persons')
-      .then(response => setPersons(response.data))
+    personService
+      .getAll()
+      .then(persons => setPersons(persons))
+      .catch(() => {
+        alert("There was an error fetching data from the server, try again later.")
+        return
+      })
+      
   }, [])
 
   // function to filter by name
@@ -64,13 +69,13 @@ const App = () => {
     }
 
     // save person to the server
-    axios
-      .post('http://localhost:3001/persons', newPerson)
-      .then(response => {
-          setPersons(persons.concat(response.data))
+    personService
+      .CreatePerson(newPerson)
+      .then(newPerson => {
+          setPersons(persons.concat(newPerson))
           setNewName('')
           setNewPhone('')   
-        } )
+      })
       .catch(() => alert("There was an error creating the record, try again later."))
     
   }

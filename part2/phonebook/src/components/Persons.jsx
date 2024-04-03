@@ -2,19 +2,20 @@
 import Person from './Person'
 
 
-const Persons = ({persons}) => {
+const Persons = ({ persons }) => {
   return (
     <div>
-        <h3>Persons</h3>
-    {
-            persons.map(person => <Person 
-                                key = {person.id} 
-                                name={person.name} 
-                                phone={person.phone} />)
-       
-    }
+      <h3>Persons</h3>
+      {persons.length === 0 ? (
+        <p>No persons available.</p>
+      ) : (
+        persons.map((person) => (
+          <Person key={person.id} name={person.name} phone={person.phone} />
+        ))
+      )}
     </div>
-  )
-}
+  );
+};
+
 
 export default Persons
