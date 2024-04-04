@@ -3,6 +3,7 @@ import Filter from './components/Filter'
 import PersonForm from './components/PersonForm'
 import Persons from './components/Persons'
 import personService from './services/persons'
+import Notification from './components/Notification'
 
 const App = () => {
   const [persons, setPersons] = useState([]) 
@@ -11,6 +12,7 @@ const App = () => {
   const [newPhone, setNewPhone] = useState('')
   const [matchFound, setMatchFound] = useState(false)
   const [nameToFind, setNameToFind] = useState('')
+  const [message, setMessage] = useState(null)
 
   // Fetch data from the server after first render of the App Component
   useEffect(() => {
@@ -59,12 +61,20 @@ const App = () => {
     const repeatedName = persons.find(p => p.name === newName)
     if(repeatedName) {
       if(window.confirm(`${newName} already exists in the phonebook, replace the old number with a new one?`)) {
+
         // update phone number
         const updatedPerson = { ...repeatedName, phone: newPhone }
+
+        // update record in the server
         personService
           .UpdatePerson(updatedPerson, repeatedName.id)
           .then(modifiedPerson => {
               setPersons(persons.map(p => p.id === modifiedPerson.id ? modifiedPerson : p))
+
+              // notify the user
+              setMessage("Phone number updated successfully")
+              // clear notification
+              setTimeout(() => setMessage(null), 5000)
           })
       }
       return
@@ -82,7 +92,14 @@ const App = () => {
       .then(newPerson => {
           setPersons(persons.concat(newPerson))
           setNewName('')
-          setNewPhone('')   
+          setNewPhone('')
+
+          // notify the user
+          setMessage(`${newPerson.name} added successfully`)
+          
+          // clear notification
+          setTimeout(() => setMessage(null), 5000)
+             
       })
       .catch(() => alert("There was an error creating the record, try again later."))
     
@@ -107,6 +124,8 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
+
+      <Notification message={message} />
 
       <Filter nameToFind={nameToFind} handleFind = {handleFind} />
 
