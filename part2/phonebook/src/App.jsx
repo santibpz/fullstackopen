@@ -72,10 +72,23 @@ const App = () => {
               setPersons(persons.map(p => p.id === modifiedPerson.id ? modifiedPerson : p))
 
               // notify the user
-              setMessage("Phone number updated successfully")
+              setMessage({text: "Phone number updated successfully", type: "success"})
               // clear notification
               setTimeout(() => setMessage(null), 5000)
           })
+          .catch(() => {
+            // notify the user
+            setMessage({text: `${updatedPerson.name} was already deleted from the phonebook`, type: "error"})
+
+            // update state 
+            setPersons(persons.filter(p => p.id !== updatedPerson.id))
+
+            // clear notification
+            setTimeout(() => setMessage(null), 5000)
+
+
+          })
+
       }
       return
     }
@@ -95,7 +108,7 @@ const App = () => {
           setNewPhone('')
 
           // notify the user
-          setMessage(`${newPerson.name} added successfully`)
+          setMessage({text:`${newPerson.name} added successfully`, type: 'success'})
           
           // clear notification
           setTimeout(() => setMessage(null), 5000)
